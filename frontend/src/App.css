@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+#root {}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-x: hidden !important;
+}
+
+.container-first {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.section {
+  scroll-snap-align: start;
+}
+
+.video {
+  transform: translateZ(0);
+  /* kích hoạt GPU compositing */
+  backface-visibility: hidden;
+  /* tránh repaint mờ */
+}
+
+@keyframes spin-slow {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.rounded-t-custom {
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+  /* Xoay 360 độ trong 10 giây */
+}
+
+@keyframes float-up-down {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+    /* nâng lên 20px */
+  }
+}
+
+.animate-bounce3s {
+  animation: float-up-down 3s ease-in-out infinite;
+}
+
+.animate-bounce2s {
+  animation: float-up-down 2s ease-in-out infinite;
+}
+
+.animate-bounce4s {
+  animation: float-up-down 4s ease-in-out infinite;
+}
+
+@keyframes spin-and-bounce {
+  0% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  25% {
+    transform: rotate(90deg) translateY(-10px);
+  }
+
+  50% {
+    transform: rotate(180deg) translateY(0);
+  }
+
+  75% {
+    transform: rotate(270deg) translateY(-10px);
+  }
+
+  100% {
+    transform: rotate(360deg) translateY(0);
+  }
+}
+
+.spin-and-bounce {
+  animation: spin-and-bounce 5s linear infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translate(30px, -50px);
+    opacity: 0.8;
+  }
+}
+
+@keyframes float-delayed {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-25px) rotate(-5deg);
+  }
+}
+
+@keyframes float-slow {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-15px) rotate(3deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gradient {
+
+  0%,
+  100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+
+  50% {
+    transform: translate(10%, 10%) scale(1.1);
+  }
+}
+
+@keyframes moveGrid {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+@keyframes wave {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(20px);
+  }
+}
+
+.animate-gradient {
+  animation: gradient 15s ease infinite;
+}
+
+.animate-wave {
+  animation: wave 10s ease-in-out infinite;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-1000 {
+  animation-delay: 1s;
+}
+
+.delay-2000 {
+  animation-delay: 2s;
+}

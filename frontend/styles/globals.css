@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --color-background: #fffffe;
+        /* TEXT */
+        --color-headline: #00214d;
+        --color-paragraph: #1b2d45;
+        /* BUTTON */
+        --color-button: #00ebc7;
+        --color-button-text: #00214d;
+        /* ILLUSTRATION */
+        --color-illustration-stroke: #00214d;
+        --color-illustration-main: #fffffe;
+        --color-illustration-highlight: #00ebc7;
+        --color-illustration-secondary: #ff5470;
+        --color-illustration-tertiary: #fde24f;
+    }
+}
+
+/* /* 
+@layer components {
+
+  
+.btn-primary {
+    @apply bg-btn-bg text-btn-text font-semibold py-3 px-6 rounded-lg shadow-md hover:opacity-90 transition duration-300 ease-in-out;
+}
+
+.page-title {
+    @apply text-text-headline text-3xl font-bold mb-4 border-b-2 border-ill-highlight pb-2;
+}
+
+.card {
+    @apply bg-bg-primary p-6 rounded-lg shadow-lg;
+}
+}
+ */
