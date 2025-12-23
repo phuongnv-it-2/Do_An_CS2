@@ -1,43 +1,34 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const mysql = require('mysql2');
 const db = require('./models');
+
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: true,
     credentials: true
 }));
 
 app.use(express.json());
 
-//Routers
-const productRouter = require('./routes/Product');
-app.use('/products', productRouter);
-const userRouter = require('./routes/User');
-app.use('/user', userRouter);
+// Routers
+app.use('/products', require('./routes/Product'));
+app.use('/user', require('./routes/User'));
 app.use('/uploads', express.static('uploads'));
-const airRouter = require('./routes/Air');
-app.use('/air', airRouter);
-const reviewRouter = require("./routes/Review")(db);
-app.use("/review", reviewRouter);
-const cartRoutes = require('./routes/Cart');
-app.use('/cart', cartRoutes);
-const orderRoutes = require("./routes/Orders");
-app.use("/orders", orderRoutes);
-const postRoutes = require("./routes/Post");
-app.use("/post", postRoutes);
-const commentRoutes = require("./routes/Comment");
-app.use("/comment", commentRoutes);
+app.use('/air', require('./routes/Air'));
+app.use('/review', require('./routes/Review')(db));
+app.use('/cart', require('./routes/Cart'));
+app.use('/orders', require('./routes/Orders'));
+app.use('/post', require('./routes/Post'));
+app.use('/comment', require('./routes/Comment'));
 
+const PORT = process.env.PORT || 3000;
 
-
-
-
-
-db.sequelize.sync().then(() => {
-    app.listen(3000, () => {
-        console.log('Server is running on port 3000');
+db.sequelize.sync()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error('Unable to connect to the database:', err);
     });
-}).catch((err) => {
-    console.error('Unable to connect to the database:', err);
-});
