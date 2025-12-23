@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
-import { ApexOptions } from "apexcharts";
+import type { ApexOptions } from "apexcharts";
 import ChartTab from "../common/ChartTab";
 import React from "react";
 

@@ -123,7 +123,7 @@ const ProductsListAD = () => {
     if (!confirm("Bạn có chắc muốn xóa sản phẩm này?")) return;
 
     try {
-      const token = localStorage.getItem("accesstoken");
+      const token = localStorage.getItem("accessToken");
       const response = await fetch(`/products/${productId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
