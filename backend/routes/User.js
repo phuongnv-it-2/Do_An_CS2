@@ -38,7 +38,7 @@ router.post('/register', async (req, res) => {
         if (existingUser)
             return res.status(400).json({ message: 'Email đã tồn tại' });
 
-        const hashedPassword = password;
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const userRole = role || "CUSTOMER";
         const prefix = userRole === "SELLER" ? "SEL" : "CUS";

@@ -147,7 +147,7 @@ function First() {
             </div>
           </div>
           <div className="img-area w-1/2 relative">
-            <img src={"/shopimg.png"} alt="Example" className="w-7/8 h-15/16" />
+            <img src={"/Shopimg.png"} alt="Example" className="w-7/8 h-15/16" />
 
             <div className="img">
               {/* h2-move-1 */}
@@ -159,7 +159,7 @@ function First() {
 
               {/* h2-move-2 */}
               <img
-                src={"/person.png"}
+                src={"/Person.png"}
                 alt="Example"
                 className="absolute w-1/5 h-1/4 left-[30%] top-[60%] animate-bounce4s"
               />
