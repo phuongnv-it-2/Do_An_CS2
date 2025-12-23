@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import hero_shape from "../assets/hero-shape.svg";
-import shopimg from "../assets/shopimg.png";
-import Person from "../assets/Person.png";
-import bottle from "../assets/bottle.png";
-import recycling from "../assets/recycling.png";
 import AboutUs from "./AboutUs.jsx";
 import Example from "./Example.jsx";
 
@@ -152,26 +147,26 @@ function First() {
             </div>
           </div>
           <div className="img-area w-1/2 relative">
-            <img src={shopimg} alt="Example" className="w-7/8 h-15/16" />
+            <img src={"/shopimg.png"} alt="Example" className="w-7/8 h-15/16" />
 
             <div className="img">
               {/* h2-move-1 */}
               <img
-                src={bottle}
+                src={"/bottle.png"}
                 alt="Example"
                 className="absolute w-1/5 h-1/4 left-[5%] top-[10%] animate-bounce3s"
               />
 
               {/* h2-move-2 */}
               <img
-                src={Person}
+                src={"/person.png"}
                 alt="Example"
                 className="absolute w-1/5 h-1/4 left-[30%] top-[60%] animate-bounce4s"
               />
 
               {/* h2-move-3 */}
               <img
-                src={recycling}
+                src={"/recycling.png"}
                 alt="Example"
                 className="absolute w-1/5 h-1/4  left-[68%] top-[26%] z-10 spin-and-bounce"
               />
@@ -181,7 +176,7 @@ function First() {
 
         {/* Ảnh dưới */}
         <img
-          src={hero_shape}
+          src={"/hero-shape.svg"}
           alt=""
           className="absolute bottom-0 left-0 w-full h-auto pointer-events-none"
         />
