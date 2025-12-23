@@ -218,8 +218,8 @@ function First() {
 
         <div className="md:w-1/2 flex justify-center md:justify-end mt-10 md:mt-0">
           <img
-            src="/earth.png"
-            alt="earth"
+            src="/Earth.png"
+            alt="Earth"
             className="w-3/4 h-3/4 object-contain animate-spin-slow"
             style={{
               borderColor: "var(--color-illustration-stroke)",
