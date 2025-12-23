@@ -1,3 +1,4 @@
+// models/User.js - Thêm association Cart
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
         UserID: {
@@ -24,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         Role: {
-            type: DataTypes.ENUM("CUSTOMER", "SELLER"),
+            type: DataTypes.ENUM("CUSTOMER", "SELLER", "ADMIN"),
             allowNull: false
         }
     });
@@ -34,16 +35,36 @@ module.exports = (sequelize, DataTypes) => {
         const count = await User.count({ where: { Role: user.Role } });
         const number = String(count + 1).padStart(4, "0");
 
-        // Timestamp: yyyymmddhhmmss + mili giây => luôn unique
         const timestamp = new Date()
             .toISOString()
-            .replace(/[-:TZ.]/g, "") // xoá ký tự đặc biệt
-            .slice(0, 17); // lấy đến mili giây
+            .replace(/[-:TZ.]/g, "")
+            .slice(0, 17);
 
         user.UserID = `${prefix}${number}-${timestamp}`;
     });
+
     User.associate = (models) => {
-        User.hasMany(models.Product, { foreignKey: 'UserID', as: 'products' });
+        // User có nhiều Products
+        User.hasMany(models.Product, {
+            foreignKey: 'UserID',
+            as: 'products'
+        });
+        User.hasMany(models.ProductReview, {
+            foreignKey: 'UserID',
+            as: 'reviews'
+        });
+        User.hasOne(models.Cart, {
+            foreignKey: 'UserID',
+            as: 'cart',
+            onDelete: 'CASCADE'
+        });
+        User.hasMany(models.Comment, {
+            foreignKey: "UserID",
+            as: "comments"
+        });
+
     };
+
+
     return User;
 };

@@ -1,0 +1,524 @@
+import React, { useState, useEffect } from "react";
+import {
+  Upload,
+  X,
+  Save,
+  ArrowLeft,
+  Sparkles,
+  ImagePlus,
+  DollarSign,
+  FileText,
+} from "lucide-react";
+import { useParams } from "react-router-dom";
+
+function EditProduct() {
+  const [product, setProduct] = useState({
+    Name: "",
+    Description: "",
+    Price: "",
+    ImgPath: "",
+  });
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
+
+  const { id } = useParams();
+  const styles = {
+    colorBackground: "#fffffe",
+    colorHeadline: "#00214d",
+    colorParagraph: "#1b2d45",
+    colorButton: "#00ebc7",
+    colorButtonText: "#00214d",
+    colorStroke: "#00214d",
+    colorMain: "#fffffe",
+    colorHighlight: "#00ebc7",
+    colorSecondary: "#ff5470",
+    colorTertiary: "#fde24f",
+  };
+
+  useEffect(() => {
+    fetchProductData();
+  }, [id]);
+
+  const fetchProductData = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem("accessToken");
+
+      const response = await fetch(`http://localhost:3000/products/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Không thể tải dữ liệu sản phẩm");
+      }
+
+      const data = await response.json();
+
+      setProduct({
+        Name: data.Name || "",
+        Description: data.Description || "",
+        Price: data.Price || "",
+        ImgPath: data.ImgPath || "",
+      });
+
+      // Set preview image nếu có
+      if (data.ImgPath) {
+        setImagePreview(`http://localhost:3000/${data.ImgPath}`);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Lỗi khi tải dữ liệu:", error);
+      alert("❌ Không thể tải dữ liệu sản phẩm!");
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProduct((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Vui lòng chọn file ảnh!");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      alert("File ảnh tối đa 5MB!");
+      return;
+    }
+
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => setImagePreview(reader.result);
+    reader.readAsDataURL(file);
+  };
+
+  const removeImage = () => {
+    setImagePreview(null);
+    setImageFile(null);
+  };
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+
+    try {
+      const token = localStorage.getItem("accessToken");
+
+      const formData = new FormData();
+      formData.append("Name", product.Name);
+      formData.append("Description", product.Description);
+      formData.append("Price", product.Price);
+
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+
+      const response = await fetch(`http://localhost:3000/products/${id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message);
+
+      alert("✅ Cập nhật thành công!");
+
+      fetchProductData(); // load lại dữ liệu
+      setImageFile(null);
+    } catch (err) {
+      console.error(err);
+      alert("❌ Lỗi khi cập nhật sản phẩm");
+    }
+
+    setIsSubmitting(false);
+  };
+
+  const handleCancel = () => {
+    if (confirm("Bạn có chắc muốn hủy các thay đổi?")) {
+      fetchProductData();
+      setImageFile(null);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: styles.colorBackground }}
+      >
+        <div className="text-center">
+          <div
+            className="w-20 h-20 border-4 border-t-transparent rounded-full animate-spin mx-auto mb-6"
+            style={{ borderColor: styles.colorHighlight }}
+          ></div>
+          <p
+            className="text-2xl font-bold"
+            style={{ color: styles.colorHeadline }}
+          >
+            Đang tải dữ liệu...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="h-screen w-screen flex items-center justify-center p-6"
+      style={{
+        background: `linear-gradient(135deg, ${styles.colorBackground} 0%, ${styles.colorHighlight}15 100%)`,
+      }}
+    >
+      <div className="relative w-full max-w-5xl h-[90vh]">
+        <div
+          className="h-full rounded-3xl shadow-2xl p-8 backdrop-blur-xl relative overflow-hidden flex flex-col"
+          style={{
+            backgroundColor: `${styles.colorMain}`,
+            border: `3px solid ${styles.colorHighlight}`,
+            boxShadow: `0 25px 50px -12px ${styles.colorHighlight}40`,
+          }}
+        >
+          {/* Header với nút back */}
+          <div
+            className="flex items-center justify-between mb-6 pb-4"
+            style={{ borderBottom: `2px solid ${styles.colorHighlight}30` }}
+          >
+            <button
+              onClick={() => window.history.back()}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl transition-all hover:scale-105"
+              style={{
+                backgroundColor: `${styles.colorHighlight}20`,
+                color: styles.colorHeadline,
+              }}
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span className="font-semibold">Quay lại</span>
+            </button>
+
+            <div className="flex items-center gap-2">
+              <Sparkles
+                className="w-6 h-6"
+                style={{ color: styles.colorHighlight }}
+              />
+              <h1
+                className="text-3xl font-black"
+                style={{ color: styles.colorHeadline }}
+              >
+                Sửa Sản Phẩm
+              </h1>
+              <Sparkles
+                className="w-6 h-6"
+                style={{ color: styles.colorTertiary }}
+              />
+            </div>
+
+            <div className="w-24"></div>
+          </div>
+
+          {/* Content scrollable */}
+          <div
+            className="flex-1 overflow-y-auto pr-2"
+            style={{
+              scrollbarWidth: "thin",
+              scrollbarColor: `${styles.colorHighlight} transparent`,
+            }}
+          >
+            <div className="grid grid-cols-2 gap-6">
+              {/* Cột trái - Upload ảnh */}
+              <div className="space-y-6">
+                <div>
+                  <label
+                    className="flex items-center gap-2 font-bold mb-3 text-lg"
+                    style={{ color: styles.colorHeadline }}
+                  >
+                    <ImagePlus
+                      className="w-5 h-5"
+                      style={{ color: styles.colorHighlight }}
+                    />
+                    Hình ảnh sản phẩm
+                  </label>
+
+                  {!imagePreview ? (
+                    <label
+                      className="relative flex flex-col items-center justify-center w-full h-96 border-2 border-dashed rounded-2xl cursor-pointer transition-all hover:scale-[1.02]"
+                      style={{
+                        borderColor: styles.colorHighlight,
+                        backgroundColor: `${styles.colorHighlight}05`,
+                      }}
+                    >
+                      <div className="flex flex-col items-center">
+                        <div
+                          className="p-4 rounded-full mb-4"
+                          style={{
+                            backgroundColor: `${styles.colorHighlight}20`,
+                          }}
+                        >
+                          <Upload
+                            className="w-12 h-12"
+                            style={{ color: styles.colorHighlight }}
+                          />
+                        </div>
+                        <p
+                          className="mb-2 text-lg font-bold"
+                          style={{ color: styles.colorHeadline }}
+                        >
+                          Kéo thả ảnh vào đây
+                        </p>
+                        <p
+                          className="text-sm px-4 py-1 rounded-full"
+                          style={{
+                            color: styles.colorParagraph,
+                            backgroundColor: `${styles.colorTertiary}30`,
+                          }}
+                        >
+                          hoặc click để chọn
+                        </p>
+                        <p
+                          className="text-xs mt-2"
+                          style={{ color: styles.colorParagraph, opacity: 0.6 }}
+                        >
+                          PNG, JPG, JPEG (MAX. 5MB)
+                        </p>
+                      </div>
+                      <input
+                        type="file"
+                        className="hidden"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                      />
+                    </label>
+                  ) : (
+                    <div
+                      className="relative rounded-2xl overflow-hidden group h-96"
+                      style={{ border: `2px solid ${styles.colorHighlight}` }}
+                    >
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={removeImage}
+                        className="absolute top-3 right-3 p-2 rounded-xl transition-all hover:scale-110 hover:rotate-90"
+                        style={{
+                          backgroundColor: styles.colorSecondary,
+                          color: styles.colorMain,
+                        }}
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                      {imageFile && (
+                        <div
+                          className="absolute bottom-3 left-3 px-3 py-1.5 rounded-xl text-sm font-bold"
+                          style={{
+                            backgroundColor: `${styles.colorHeadline}95`,
+                            color: styles.colorMain,
+                          }}
+                        >
+                          📷 {imageFile.name}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Cột phải - Form fields */}
+              <div className="space-y-6">
+                {/* Name */}
+                <div>
+                  <label
+                    className="flex items-center gap-2 font-bold mb-2 text-lg"
+                    style={{ color: styles.colorHeadline }}
+                  >
+                    <FileText
+                      className="w-5 h-5"
+                      style={{ color: styles.colorHighlight }}
+                    />
+                    Tên sản phẩm{" "}
+                    <span style={{ color: styles.colorSecondary }}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="Name"
+                    value={product.Name}
+                    onChange={handleChange}
+                    onFocus={() => setFocusedField("name")}
+                    onBlur={() => setFocusedField(null)}
+                    placeholder="VD: Túi vải canvas tái chế"
+                    className="w-full px-4 py-3 rounded-xl text-base font-medium transition-all outline-none"
+                    style={{
+                      border: `2px solid ${
+                        focusedField === "name"
+                          ? styles.colorHighlight
+                          : `${styles.colorHighlight}40`
+                      }`,
+                      color: styles.colorHeadline,
+                      backgroundColor: styles.colorBackground,
+                    }}
+                  />
+                </div>
+
+                {/* Description */}
+                <div>
+                  <label
+                    className="flex items-center gap-2 font-bold mb-2 text-lg"
+                    style={{ color: styles.colorHeadline }}
+                  >
+                    <FileText
+                      className="w-5 h-5"
+                      style={{ color: styles.colorTertiary }}
+                    />
+                    Mô tả{" "}
+                    <span style={{ color: styles.colorSecondary }}>*</span>
+                  </label>
+                  <textarea
+                    name="Description"
+                    value={product.Description}
+                    onChange={handleChange}
+                    onFocus={() => setFocusedField("desc")}
+                    onBlur={() => setFocusedField(null)}
+                    rows="8"
+                    placeholder="Mô tả chi tiết sản phẩm..."
+                    className="w-full px-4 py-3 rounded-xl text-base font-medium transition-all outline-none resize-none"
+                    style={{
+                      border: `2px solid ${
+                        focusedField === "desc"
+                          ? styles.colorTertiary
+                          : `${styles.colorTertiary}40`
+                      }`,
+                      color: styles.colorHeadline,
+                      backgroundColor: styles.colorBackground,
+                    }}
+                  />
+                </div>
+
+                {/* Price */}
+                <div>
+                  <label
+                    className="flex items-center gap-2 font-bold mb-2 text-lg"
+                    style={{ color: styles.colorHeadline }}
+                  >
+                    <DollarSign
+                      className="w-5 h-5"
+                      style={{ color: styles.colorSecondary }}
+                    />
+                    Giá bán (VNĐ){" "}
+                    <span style={{ color: styles.colorSecondary }}>*</span>
+                  </label>
+                  <input
+                    type="number"
+                    name="Price"
+                    value={product.Price}
+                    onChange={handleChange}
+                    onFocus={() => setFocusedField("price")}
+                    onBlur={() => setFocusedField(null)}
+                    step="1000"
+                    placeholder="150000"
+                    className="w-full px-4 py-3 rounded-xl text-base font-bold transition-all outline-none"
+                    style={{
+                      border: `2px solid ${
+                        focusedField === "price"
+                          ? styles.colorSecondary
+                          : `${styles.colorSecondary}40`
+                      }`,
+                      color: styles.colorHeadline,
+                      backgroundColor: styles.colorBackground,
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer buttons */}
+          <div
+            className="flex gap-4 pt-6 mt-6"
+            style={{ borderTop: `2px solid ${styles.colorHighlight}30` }}
+          >
+            <button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="flex-1 font-bold py-4 px-6 rounded-xl shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg"
+              style={{
+                backgroundColor: styles.colorButton,
+                color: styles.colorButtonText,
+              }}
+            >
+              {isSubmitting ? (
+                <>
+                  <div
+                    className="w-5 h-5 border-3 border-t-transparent rounded-full animate-spin"
+                    style={{ borderColor: styles.colorButtonText }}
+                  ></div>
+                  <span>Đang lưu...</span>
+                </>
+              ) : (
+                <>
+                  <Save className="w-5 h-5" />
+                  <span>Lưu Thay Đổi</span>
+                </>
+              )}
+            </button>
+
+            <button
+              onClick={handleCancel}
+              disabled={isSubmitting}
+              className="flex-1 font-bold py-4 px-6 rounded-xl shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed text-lg"
+              style={{
+                backgroundColor: styles.colorSecondary,
+                color: styles.colorMain,
+              }}
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+
+        {/* Decorative elements nhỏ hơn */}
+        <div
+          className="absolute -top-4 -right-4 w-16 h-16 rounded-full blur-xl opacity-30"
+          style={{ backgroundColor: styles.colorTertiary }}
+        ></div>
+        <div
+          className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full blur-xl opacity-30"
+          style={{ backgroundColor: styles.colorHighlight }}
+        ></div>
+      </div>
+
+      <style>{`
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: ${styles.colorHighlight};
+          border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: ${styles.colorHighlight}cc;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+export default EditProduct;

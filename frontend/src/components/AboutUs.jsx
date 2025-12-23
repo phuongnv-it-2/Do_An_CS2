@@ -25,19 +25,9 @@ export default function AboutUs() {
 
   const team = [
     {
-      name: "Nguyễn Văn A",
-      role: "CEO & Founder",
+      name: "Nguyễn Văn Phương",
+      role: "Lead Developer",
       img: "https://i.pravatar.cc/300?img=12",
-    },
-    {
-      name: "Trần Thị B",
-      role: "CTO",
-      img: "https://i.pravatar.cc/300?img=47",
-    },
-    {
-      name: "Lê Văn C",
-      role: "Creative Director",
-      img: "https://i.pravatar.cc/300?img=33",
     },
   ];
 

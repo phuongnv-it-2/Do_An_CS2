@@ -140,7 +140,7 @@ function First() {
               không chỉ có giá trị sử dụng mà còn mang ý nghĩa bảo vệ Trái Đất.
             </p>
             <div className="flex justify-center gap-4 flex-wrap">
-              <Link to="/productlists">
+              <Link to="/login">
                 <button
                   className="px-8 py-3.5 rounded-lg font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
                   style={{
@@ -148,18 +148,9 @@ function First() {
                     color: "var(--color-button-text)",
                   }}
                 >
-                  Khám phá ngay
+                  Đăng tải sản phẩm
                 </button>
               </Link>
-              <button
-                className="px-8 py-3.5 rounded-lg font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
-                style={{
-                  backgroundColor: "var(--color-button)",
-                  color: "var(--color-button-text)",
-                }}
-              >
-                Đăng tải sản phẩm
-              </button>
             </div>
           </div>
           <div className="img-area w-1/2 relative">
@@ -217,25 +208,18 @@ function First() {
             dựng một hệ sinh thái xanh, nơi sản phẩm tái chế không chỉ có giá
             trị sử dụng mà còn mang ý nghĩa bảo vệ Trái Đất.
           </p>
-          <div className="flex space-x-4">
-            <button
-              className="px-6 py-3 rounded-lg transition hover:opacity-90"
-              style={{
-                backgroundColor: "var(--color-button)",
-                color: "var(--color-button-text)",
-              }}
-            >
-              Khám phá ngay
-            </button>
-            <button
-              className="px-6 py-3 rounded-lg border transition hover:bg-[var(--color-button)] hover:text-[var(--color-background)]"
-              style={{
-                borderColor: "var(--color-button-text)",
-                color: "var(--color-button-text)",
-              }}
-            >
-              Đăng tải sản phẩm
-            </button>
+          <div className="flex justify-center gap-4 flex-wrap">
+            <Link to="/explore">
+              <button
+                className="px-8 py-3.5 rounded-lg font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
+                style={{
+                  backgroundColor: "var(--color-button)",
+                  color: "var(--color-button-text)",
+                }}
+              >
+                khám phá ngay
+              </button>
+            </Link>
           </div>
         </div>
 

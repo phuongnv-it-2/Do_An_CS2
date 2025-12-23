@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
+            mod3D: {
+                type: DataTypes.STRING,
+                allowNull: true, // có thể null
+            },
+
         },
         {
             freezeTableName: true,

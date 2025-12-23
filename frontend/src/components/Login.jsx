@@ -20,15 +20,25 @@ function Login() {
     axios
       .post("http://localhost:3000/user/login", data, { withCredentials: true })
       .then((res) => {
-        console.log("Đăng nhập thành công:", res.data);
-        alert("Đăng nhập thành công!");
-        // Lưu vào state thay vì localStorage
-        // Bạn có thể sử dụng Context API hoặc Redux để quản lý state
-        window.location.href = "/";
+        const { accessToken, user } = res.data;
+
+        if (!accessToken) {
+          throw new Error("Không nhận được token từ server");
+        }
+
+        // Lưu token + user
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("user", JSON.stringify(user));
+        if (user?.redirect) {
+          window.location.href = user.redirect;
+        } else {
+          window.location.href = "/";
+        }
       })
       .catch((err) => {
-        console.error("Đăng nhập thất bại:", err);
-        alert("Email/Username hoặc mật khẩu không đúng");
+        console.error("❌ Đăng nhập thất bại:", err);
+        console.error("❌ Response data:", err.response?.data);
+        alert(err.response?.data?.message || "Email hoặc mật khẩu không đúng");
       })
       .finally(() => setSubmitting(false));
   };
