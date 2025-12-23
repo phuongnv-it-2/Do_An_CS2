@@ -70,7 +70,12 @@ function ProductLists() {
   // ================= Xử lý ảnh ====================
   const getImageUrl = (imgPath) => {
     if (!imgPath) return null;
-    if (imgPath.startsWith("http")) return imgPath;
+    if (imgPath.startsWith("http") || imgPath.startsWith("data:")) {
+      return imgPath;
+    }
+    if (imgPath.startsWith("/")) {
+      return `${API_URL}${imgPath}`;
+    }
     return `${API_URL}/${imgPath}`;
   };
   const reloadProducts = async () => {
