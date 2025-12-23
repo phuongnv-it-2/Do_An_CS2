@@ -10,7 +10,7 @@ function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  const API_URL = "http://localhost:3000";
+  const API_URL = "https://do-an-cs2.onrender.com";
   // Lấy thông tin user từ localStorage hoặc context/redux
   const [user, setUser] = useState(null);
 
@@ -68,13 +68,16 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       // Gọi API logout để xóa refreshToken cookie trên server
-      const response = await fetch("http://localhost:3000/user/logout", {
-        method: "POST",
-        credentials: "include", // Quan trọng: gửi cookie cùng request
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const response = await fetch(
+        "https://do-an-cs2.onrender.com/user/logout",
+        {
+          method: "POST",
+          credentials: "include", // Quan trọng: gửi cookie cùng request
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
 
       if (response.ok) {
         // Xóa token và user info từ localStorage
@@ -187,18 +190,18 @@ function Navbar() {
                               ? user.ImgPath.startsWith("http")
                                 ? user.ImgPath
                                 : user.ImgPath.startsWith("/")
-                                ? `http://localhost:3000${user.ImgPath}`
-                                : `http://localhost:3000/uploads/avatars/${user.ImgPath}`
+                                ? `https://do-an-cs2.onrender.com${user.ImgPath}`
+                                : `https://do-an-cs2.onrender.com/uploads/avatars/${user.ImgPath}`
                               : // Kiểm tra user.avatar (có thể từ response khác)
                               user.avatar
                               ? user.avatar.startsWith("http")
                                 ? user.avatar
-                                : `http://localhost:3000${user.avatar}`
+                                : `https://do-an-cs2.onrender.com${user.avatar}`
                               : // Kiểm tra user.img (thường từ login response)
                               user.img
                               ? user.img.startsWith("http")
                                 ? user.img
-                                : `http://localhost:3000${user.img}`
+                                : `https://do-an-cs2.onrender.com${user.img}`
                               : "/placeholder.png"
                           }
                           alt={

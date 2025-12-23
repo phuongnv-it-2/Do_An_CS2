@@ -18,7 +18,9 @@ function Login() {
 
   const onSubmit = (data, { setSubmitting }) => {
     axios
-      .post("http://localhost:3000/user/login", data, { withCredentials: true })
+      .post("https://do-an-cs2.onrender.com/user/login", data, {
+        withCredentials: true,
+      })
       .then((res) => {
         const { accessToken, user } = res.data;
 

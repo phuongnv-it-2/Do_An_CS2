@@ -40,7 +40,7 @@ export default function MonthlyTarget() {
       }
 
       const response = await fetch(
-        'http://localhost:3000/orders/revenue-summary',
+        'https://do-an-cs2.onrender.com/orders/revenue-summary',
         {
           method: 'GET',
           headers: {

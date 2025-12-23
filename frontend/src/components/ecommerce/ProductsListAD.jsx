@@ -25,7 +25,7 @@ const ProductsListAD = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
-  const API_URL = "http://localhost:3000";
+  const API_URL = "https://do-an-cs2.onrender.com";
 
   const getImageUrl = (imgPath) => {
     if (!imgPath) return "/placeholder.png";

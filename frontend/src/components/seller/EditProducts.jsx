@@ -47,13 +47,16 @@ function EditProduct() {
     try {
       const token = localStorage.getItem("accessToken");
 
-      const response = await fetch(`http://localhost:3000/products/${id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://do-an-cs2.onrender.com/products/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Không thể tải dữ liệu sản phẩm");
@@ -70,7 +73,7 @@ function EditProduct() {
 
       // Set preview image nếu có
       if (data.ImgPath) {
-        setImagePreview(`http://localhost:3000/${data.ImgPath}`);
+        setImagePreview(`https://do-an-cs2.onrender.com/${data.ImgPath}`);
       }
 
       setLoading(false);
@@ -125,13 +128,16 @@ function EditProduct() {
         formData.append("image", imageFile);
       }
 
-      const response = await fetch(`http://localhost:3000/products/${id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `https://do-an-cs2.onrender.com/products/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
 
       const result = await response.json();
       if (!response.ok) throw new Error(result.message);

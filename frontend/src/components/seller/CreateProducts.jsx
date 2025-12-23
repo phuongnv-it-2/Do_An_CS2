@@ -98,12 +98,16 @@ function CreateProducts() {
         formData.append("mod3D", mod3DFile);
       }
 
-      const res = await axios.post("http://localhost:3000/products", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await axios.post(
+        "https://do-an-cs2.onrender.com/products",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       alert("Tạo sản phẩm thành công!");
       resetForm();

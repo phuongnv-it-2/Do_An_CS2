@@ -10,7 +10,7 @@ function NavBar_Seller() {
   const location = useLocation();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  const API_URL = "http://localhost:3000";
+  const API_URL = "https://do-an-cs2.onrender.com";
 
   // Lấy thông tin user từ localStorage
   const [user, setUser] = useState(null);
@@ -34,12 +34,15 @@ function NavBar_Seller() {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/user/profile", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "https://do-an-cs2.onrender.com/user/profile",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -147,13 +150,16 @@ function NavBar_Seller() {
   const handleLogout = async () => {
     try {
       // Gọi API logout để xóa refreshToken cookie trên server
-      const response = await fetch("http://localhost:3000/user/logout", {
-        method: "POST",
-        credentials: "include", // Quan trọng: gửi cookie cùng request
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const response = await fetch(
+        "https://do-an-cs2.onrender.com/user/logout",
+        {
+          method: "POST",
+          credentials: "include", // Quan trọng: gửi cookie cùng request
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
 
       if (response.ok) {
         console.log("Logout successful");

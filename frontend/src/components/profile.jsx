@@ -58,12 +58,15 @@ function Profile() {
       }
 
       try {
-        const response = await fetch("http://localhost:3000/user/profile", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          "https://do-an-cs2.onrender.com/user/profile",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!response.ok) {
           navigate("/login");
@@ -142,13 +145,16 @@ function Profile() {
         formDataToSend.append("avatar", selectedFile);
       }
 
-      const response = await fetch("http://localhost:3000/user/profile", {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: formDataToSend,
-      });
+      const response = await fetch(
+        "https://do-an-cs2.onrender.com/user/profile",
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          body: formDataToSend,
+        }
+      );
 
       const data = await response.json();
 
@@ -198,7 +204,7 @@ function Profile() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/user/change-password",
+        "https://do-an-cs2.onrender.com/user/change-password",
         {
           method: "PUT",
           headers: {
@@ -285,7 +291,7 @@ function Profile() {
   const currentAvatar = previewImage
     ? previewImage
     : user.ImgPath
-    ? `http://localhost:3000${user.ImgPath}`
+    ? `https://do-an-cs2.onrender.com${user.ImgPath}`
     : null;
 
   return (

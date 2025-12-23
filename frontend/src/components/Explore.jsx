@@ -209,7 +209,9 @@ function Explore() {
       setLoading(true);
       setAirData(null);
 
-      const res = await fetch(`http://localhost:3000/air?city=${citySlug}`);
+      const res = await fetch(
+        `https://do-an-cs2.onrender.com/air?city=${citySlug}`
+      );
       const data = await res.json();
 
       console.log("Dữ liệu API trả về:", data);

@@ -23,7 +23,7 @@ export default function TopProducts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [limit, setLimit] = useState(5);
-  const API_URL = "http://localhost:3000";
+  const API_URL = "https://do-an-cs2.onrender.com";
   const getImageUrl = (imgPath) => {
   if (!imgPath) return '/images/product/placeholder.jpg';
   if (imgPath.startsWith("http")) return imgPath;
@@ -43,7 +43,7 @@ export default function TopProducts() {
       const token = localStorage.getItem('accessToken') || '';
       
       const response = await fetch(
-        `http://localhost:3000/orders/top-products?limit=${limit}`,
+        `https://do-an-cs2.onrender.com/orders/top-products?limit=${limit}`,
         {
           method: 'GET',
           headers: {

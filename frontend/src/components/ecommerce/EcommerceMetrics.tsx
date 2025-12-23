@@ -86,7 +86,7 @@ export default function EcommerceMetrics() {
     
     try {
       // Gọi API metrics tổng thể
-      const metricsRes = await fetch('http://localhost:3000/products/metrics');
+      const metricsRes = await fetch('https://do-an-cs2.onrender.com/products/metrics');
       
       if (!metricsRes.ok) {
         throw new Error(`HTTP error! status: ${metricsRes.status}`);
@@ -97,7 +97,7 @@ export default function EcommerceMetrics() {
     
       let totalUsers = 0;
       try {
-          const usersRes = await fetch('http://localhost:3000/user/metrics');
+          const usersRes = await fetch('https://do-an-cs2.onrender.com/user/metrics');
         if (usersRes.ok) {
           const usersData = await usersRes.json();
           totalUsers = usersData.totalUsers  || 0;

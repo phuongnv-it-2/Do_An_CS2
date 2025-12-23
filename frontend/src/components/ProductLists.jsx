@@ -27,7 +27,7 @@ function ProductLists() {
 
   // const navigate = useNavigate();
 
-  const API_URL = "http://localhost:3000";
+  const API_URL = "https://do-an-cs2.onrender.com";
 
   // ================= Lấy danh sách sản phẩm ====================
   useEffect(() => {

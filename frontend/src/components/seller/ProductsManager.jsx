@@ -12,7 +12,7 @@ function Home() {
   const [viewMode, setViewMode] = useState("grid");
   const [loading, setLoading] = useState(true);
 
-  const API_URL = "http://localhost:3000";
+  const API_URL = "https://do-an-cs2.onrender.com";
   const navigate = useNavigate();
 
   const handleEditClick = (id) => {

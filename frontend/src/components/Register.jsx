@@ -42,7 +42,7 @@ function Register() {
 
   const onSubmit = (values, { setSubmitting, resetForm }) => {
     axios
-      .post("http://localhost:3000/user/register", values)
+      .post("https://do-an-cs2.onrender.com/user/register", values)
       .then(() => {
         alert("🎉 Đăng ký thành công!");
         resetForm();

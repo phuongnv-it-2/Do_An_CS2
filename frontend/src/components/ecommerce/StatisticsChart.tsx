@@ -32,10 +32,10 @@ export default function StatisticsChart() {
         throw new Error('Token không tồn tại. Vui lòng đăng nhập lại.');
       }
 
-      console.log('📡 Making request to:', `http://localhost:3000/orders/revenue-statistics?year=${selectedYear}`);
+      console.log('📡 Making request to:', `https://do-an-cs2.onrender.com/orders/revenue-statistics?year=${selectedYear}`);
 
       const response = await fetch(
-        `http://localhost:3000/orders/revenue-statistics?year=${selectedYear}`,
+        `https://do-an-cs2.onrender.com/orders/revenue-statistics?year=${selectedYear}`,
         {
           method: 'GET',
           headers: {

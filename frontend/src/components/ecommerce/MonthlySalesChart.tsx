@@ -35,7 +35,7 @@ export default function MonthlySalesChart() {
       }
 
       const response = await fetch(
-        `http://localhost:3000/orders/revenue-statistics?year=${selectedYear}`,
+        `https://do-an-cs2.onrender.com/orders/revenue-statistics?year=${selectedYear}`,
         {
           method: 'GET',
           headers: {

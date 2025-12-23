@@ -28,7 +28,7 @@ function PostPage() {
   const [showCreatePost, setShowCreatePost] = useState(false);
   const [user, setUser] = useState(null);
 
-  const API_URL = "http://localhost:3000/post";
+  const API_URL = "https://do-an-cs2.onrender.com/post";
   const token = localStorage.getItem("accessToken");
 
   const styles = {
@@ -52,12 +52,14 @@ function PostPage() {
     if (!path) return "/placeholder.png";
 
     if (path.startsWith("http")) return path;
-    if (path.startsWith("/")) return `http://localhost:3000${path}`;
-    return `http://localhost:3000/uploads/avatars/${path}`;
+    if (path.startsWith("/")) return `https://do-an-cs2.onrender.com${path}`;
+    return `https://do-an-cs2.onrender.com/uploads/avatars/${path}`;
   };
   const fetchComments = async (postId) => {
     try {
-      const res = await fetch(`http://localhost:3000/comment/${postId}`);
+      const res = await fetch(
+        `https://do-an-cs2.onrender.comcomment/${postId}`
+      );
       const data = await res.json();
       setComments((prev) => ({ ...prev, [postId]: data }));
     } catch (err) {
@@ -108,7 +110,7 @@ function PostPage() {
     if (!commentText[postId]) return;
 
     try {
-      const res = await fetch("http://localhost:3000/comment", {
+      const res = await fetch("https://do-an-cs2.onrender.com/comment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -510,7 +512,7 @@ function PostPage() {
                       >
                         {post.author?.ImgPath ? (
                           <img
-                            src={`http://localhost:3000${post.author.ImgPath}`}
+                            src={`https://do-an-cs2.onrender.com${post.author.ImgPath}`}
                             className="w-full h-full object-cover"
                           />
                         ) : (
@@ -568,7 +570,7 @@ function PostPage() {
                   {post.ImagePath && (
                     <div className="w-full">
                       <img
-                        src={`http://localhost:3000${post.ImagePath}`}
+                        src={`https://do-an-cs2.onrender.com${post.ImagePath}`}
                         className="w-full max-h-96 object-cover"
                       />
                     </div>

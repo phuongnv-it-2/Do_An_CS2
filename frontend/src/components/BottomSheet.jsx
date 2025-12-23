@@ -30,7 +30,7 @@ export default function BottomSheet({ open, onClose, product, fetchReviews }) {
     } catch (err) {
       if (err.response?.status === 401) {
         const refreshRes = await axios.post(
-          "http://localhost:3000/user/refresh",
+          "https://do-an-cs2.onrender.com/user/refresh",
           {},
           { withCredentials: true }
         );
@@ -52,7 +52,7 @@ export default function BottomSheet({ open, onClose, product, fetchReviews }) {
     try {
       const response = await apiCall((token) =>
         axios.post(
-          "http://localhost:3000/cart/add",
+          "https://do-an-cs2.onrender.com/cart/add",
           {
             productId: product.id,
             quantity: quantity,
@@ -93,7 +93,7 @@ export default function BottomSheet({ open, onClose, product, fetchReviews }) {
     try {
       await apiCall((token) =>
         axios.post(
-          "http://localhost:3000/review/create",
+          "https://do-an-cs2.onrender.com/review/create",
           {
             productId: product.id,
             rating: tempRating,
