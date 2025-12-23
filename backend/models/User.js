@@ -1,34 +1,42 @@
 // models/User.js - Thêm association Cart
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('User', {
-        UserID: {
-            type: DataTypes.STRING,
-            primaryKey: true,
-            allowNull: false
+    const User = sequelize.define(
+        'User',
+        {
+            UserID: {
+                type: DataTypes.STRING,
+                primaryKey: true,
+                allowNull: false
+            },
+            UserName: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            Email: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                unique: true
+            },
+            ImgPath: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                defaultValue: null
+            },
+            Password: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            Role: {
+                type: DataTypes.ENUM("CUSTOMER", "SELLER", "ADMIN"),
+                allowNull: false
+            }
         },
-        UserName: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        Email: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            unique: true
-        },
-        ImgPath: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            defaultValue: null
-        },
-        Password: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        Role: {
-            type: DataTypes.ENUM("CUSTOMER", "SELLER", "ADMIN"),
-            allowNull: false
+        {
+            tableName: "User",        // ✅ BẮT BUỘC
+            freezeTableName: true     // ✅ BẮT BUỘC
         }
-    });
+    );
+
 
     User.beforeCreate(async (user, options) => {
         const prefix = user.Role === "SELLER" ? "SEL" : "CUS";
