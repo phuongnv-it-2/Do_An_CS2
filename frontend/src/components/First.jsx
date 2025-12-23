@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import EarthImg from "../assets/earth.png";
-import NavBar from "./NavBar.jsx";
 import hero_shape from "../assets/hero-shape.svg";
 import shopimg from "../assets/shopimg.png";
 import Person from "../assets/Person.png";
@@ -225,8 +223,8 @@ function First() {
 
         <div className="md:w-1/2 flex justify-center md:justify-end mt-10 md:mt-0">
           <img
-            src={EarthImg}
-            alt="Example"
+            src="/earth.png"
+            alt="earth"
             className="w-3/4 h-3/4 object-contain animate-spin-slow"
             style={{
               borderColor: "var(--color-illustration-stroke)",
